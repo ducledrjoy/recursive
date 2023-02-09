@@ -28,6 +28,19 @@ public class Main {
         Department newRoot = changeSettings(nameSettings, root);
         System.out.println(newRoot);
     }
+    private static Department changeSettings(Map<Integer, String> nameSettings, Department department) {
+
+        List<Department> departments = department.getChilds();
+        if (!departments.isEmpty()) {
+            for (Department dpt : departments) {
+                if (nameSettings.containsKey(dpt.getId())) {
+                    dpt.setName(nameSettings.get(dpt.getId()));
+                }
+                changeSettings(nameSettings, dpt);
+            }
+        }
+        return department;
+    }
     public static Department initialDepartment() {
         Department d332 = new Department(332, "D332", new ArrayList<>());
         Department d331 = new Department(331, "D331", new ArrayList<>());
