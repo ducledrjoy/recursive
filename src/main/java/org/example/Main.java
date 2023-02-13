@@ -13,17 +13,21 @@ import java.util.Map;
 
 public class Main {
 
+    private static int count = 0;
+
     public static void main(String[] args) {
         Department root = initialDepartment();
         Map<Integer, String> nameSettings = initialNameSettings();
 
         Department newRoot = changeSettings(nameSettings, root);
         System.out.println(newRoot);
+        System.out.println("The number of step : " + count);
     }
 
     private static Department changeSettings(Map<Integer, String> nameSettings, Department root) {
         for (Integer key: nameSettings.keySet()){
             String departmentName = nameSettings.get(key);
+            count ++;
             updateDepartmentName(key, departmentName, root);
         }
         return root;
@@ -31,11 +35,13 @@ public class Main {
 
     private static void updateDepartmentName(Integer key, String departmentName, Department root) {
         if (root.getId() == key){
+            count ++;
             root.setName(departmentName);
             return;
         }
         if (root.getChilds().isEmpty()) return;
         for (Department child: root.getChilds()){
+            count ++;
             updateDepartmentName(key, departmentName, child);
         }
     }
