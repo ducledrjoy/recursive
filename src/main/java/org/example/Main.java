@@ -35,7 +35,6 @@ public class Main {
 
     private static void updateDepartmentName(Integer key, String departmentName, Department root) {
         if (root.getId() == key){
-            count ++;
             root.setName(departmentName);
             return;
         }
