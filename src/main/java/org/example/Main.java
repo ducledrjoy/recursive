@@ -10,14 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-class Department {
-    private int id;
-    private String name;
-    private List<Department> childs = new ArrayList<>();
-}
 
 public class Main {
 
@@ -28,6 +20,26 @@ public class Main {
         Department newRoot = changeSettings(nameSettings, root);
         System.out.println(newRoot);
     }
+
+    private static Department changeSettings(Map<Integer, String> nameSettings, Department root) {
+        for (Integer key: nameSettings.keySet()){
+            String departmentName = nameSettings.get(key);
+            updateDepartmentName(key, departmentName, root);
+        }
+        return root;
+    }
+
+    private static void updateDepartmentName(Integer key, String departmentName, Department root) {
+        if (root.getId() == key){
+            root.setName(departmentName);
+            return;
+        }
+        if (root.getChilds().isEmpty()) return;
+        for (Department child: root.getChilds()){
+            updateDepartmentName(key, departmentName, child);
+        }
+    }
+
     public static Department initialDepartment() {
         Department d332 = new Department(332, "D332", new ArrayList<>());
         Department d331 = new Department(331, "D331", new ArrayList<>());
@@ -68,4 +80,15 @@ public class Main {
         nameSettings.put(331, "Department 331");
         return nameSettings;
     }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    public static class Department {
+        private int id;
+        private String name;
+        private List<Department> childs = new ArrayList<>();
+    }
 }
+
+
