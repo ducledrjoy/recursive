@@ -21,18 +21,21 @@ class Department {
 
 public class Main {
 
+    private static int count;
+
     public static void main(String[] args) {
         Department root = initialDepartment();
         Map<Integer, String> nameSettings = initialNameSettings();
 
         Department newRoot = changeSettings(nameSettings, root);
         System.out.println(newRoot);
+        System.out.println("for loop count : " + count);
     }
     private static Department changeSettings(Map<Integer, String> nameSettings, Department department) {
-
         List<Department> departments = department.getChilds();
         if (!departments.isEmpty()) {
             for (Department dpt : departments) {
+                count ++;
                 if (nameSettings.containsKey(dpt.getId())) {
                     dpt.setName(nameSettings.get(dpt.getId()));
                 }
